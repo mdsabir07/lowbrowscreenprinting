@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
 
@@ -18,11 +19,13 @@ export default function Header() {
                 {/* Brand / Logo Slot */}
                 <Link
                     href="/"
-                    className="group flex items-center gap-3 focus:outline-none"
+                    className="group flex gap-3 focus:outline-none"
                     aria-label="Lowbrow Screen Printing Home"
                 >
                     {/* Replace this badge with <Image src="/logo.png" ... /> once Nigel provides his logo */}
-                    <div className="flex h-10 w-10 items-center justify-center rounded-md border border-zinc-700 bg-zinc-900 font-black tracking-tighter text-amber-400 transition group-hover:border-amber-400">
+                    <Image src="/lowbrow-new-logobw.jpg" alt="Logo" width={290} height={80} priority className="h-12 w-auto object-contain sm:h-14"
+/>
+                    {/* <div className="flex h-10 w-10 items-center justify-center rounded-md border border-zinc-700 bg-zinc-900 font-black tracking-tighter text-amber-400 transition group-hover:border-amber-400">
                         LSP
                     </div>
                     <div className="flex flex-col">
@@ -32,7 +35,7 @@ export default function Header() {
                         <span className="text-[11px] font-medium uppercase tracking-[0.2em] text-zinc-400">
                             Screen Printing
                         </span>
-                    </div>
+                    </div> */}
                 </Link>
 
                 {/* Desktop Navigation */}
