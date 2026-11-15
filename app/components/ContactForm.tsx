@@ -32,7 +32,7 @@ export default function ContactForm() {
     return (
         <section
             id="contact"
-            className="relative border-t border-zinc-800 bg-zinc-950 py-20 sm:py-28"
+            className="relative bg-zinc-950 sm:py-20"
         >
             <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
                 {/* Section Header */}
