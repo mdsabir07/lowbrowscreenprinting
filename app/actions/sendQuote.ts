@@ -41,7 +41,7 @@ export async function sendQuoteAction(formData: FormData) {
             },
             body: JSON.stringify({
                 from: "Lowbrow Quotes <onboarding@resend.dev>",
-                to: ["contact@lowbrowscreenprinting.com"],
+                to: ["sabirdev07@gmail.com"], // Temporarily set to your Resend login email for testing
                 reply_to: email,
                 subject: `New Quote Request from ${name} (${quantity})`,
                 text: [

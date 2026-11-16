@@ -26,20 +26,22 @@ export default function ContactForm() {
         setStatus("submitting");
         setErrorMessage("");
 
-        const formData = new FormData(e.currentTarget);
+        const form = e.currentTarget;
+        const formData = new FormData(form);
 
-        // Ensure the selected file is included if present
-        if (selectedFile && !formData.get("file")) {
-            formData.append("file", selectedFile);
+        // Ensure the selected file is attached under "artwork"
+        if (selectedFile) {
+            formData.set("artwork", selectedFile);
         }
 
         const result = await sendQuoteAction(formData);
 
         if (result.success) {
             setStatus("sent");
-            setSelectedFile(null);
+            form.reset();         // Clears all text and textarea inputs natively
+            setSelectedFile(null); // Clears the selected file state
             if (fileInputRef.current) {
-                fileInputRef.current.value = "";
+                fileInputRef.current.value = ""; // Resets the hidden file input
             }
         } else {
             setStatus("error");
