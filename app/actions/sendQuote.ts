@@ -16,10 +16,10 @@ export async function sendQuoteAction(formData: FormData) {
 
     if (artwork && artwork.size > 0) {
         // Keep well below Next.js/Resend payload limits (e.g., 4MB max)
-        if (artwork.size > 4 * 1024 * 1024) {
+        if (artwork.size > 10 * 1024 * 1024) {
             return {
                 success: false,
-                error: "Artwork file is too large (max 4MB). Please upload a smaller file or mention a link in project details.",
+                error: "Artwork file is too large (max 10MB). Please upload a smaller file or share a cloud link.",
             };
         }
 
