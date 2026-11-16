@@ -1,9 +1,11 @@
 "use client";
 
 import { useState, useRef } from "react";
+import { sendQuoteAction } from "@/app/actions/sendQuote";
 
 export default function ContactForm() {
-    const [status, setStatus] = useState<"idle" | "submitting" | "sent">("idle");
+    const [status, setStatus] = useState<"idle" | "submitting" | "sent" | "error">("idle");
+    const [errorMessage, setErrorMessage] = useState<string>("");
     const [selectedFile, setSelectedFile] = useState<File | null>(null);
     const fileInputRef = useRef<HTMLInputElement | null>(null);
 
@@ -22,11 +24,27 @@ export default function ContactForm() {
     async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
         e.preventDefault();
         setStatus("submitting");
+        setErrorMessage("");
 
-        // Ready to wire to Formspree, Resend, or a Next.js API route
-        setTimeout(() => {
+        const formData = new FormData(e.currentTarget);
+
+        // Ensure the selected file is included if present
+        if (selectedFile && !formData.get("file")) {
+            formData.append("file", selectedFile);
+        }
+
+        const result = await sendQuoteAction(formData);
+
+        if (result.success) {
             setStatus("sent");
-        }, 700);
+            setSelectedFile(null);
+            if (fileInputRef.current) {
+                fileInputRef.current.value = "";
+            }
+        } else {
+            setStatus("error");
+            setErrorMessage(result.error || "Something went wrong. Please try again.");
+        }
     }
 
     return (
@@ -145,7 +163,7 @@ export default function ContactForm() {
                                     <p className="mt-2 text-sm text-zinc-300">
                                         Upload an image{" "}
                                         <span className="text-zinc-500">
-                                            (jpg, jpeg, svg and png)
+                                            (jpg, jpeg, svg and png — max 4MB)
                                         </span>
                                     </p>
 
@@ -163,7 +181,7 @@ export default function ContactForm() {
                                         <button
                                             type="button"
                                             onClick={() => fileInputRef.current?.click()}
-                                            className="mt-4 rounded-md border border-zinc-700 bg-zinc-900 px-4 py-2 text-xs font-bold uppercase tracking-wider text-white transition hover:border-amber-400 hover:text-amber-400"
+                                            className="mt-4 rounded-md border border-zinc-700 bg-zinc-900 px-4 py-2 text-xs font-bold uppercase tracking-wider text-white transition hover:border-amber-400 hover:text-amber-400 cursor-pointer"
                                         >
                                             Browse for Images
                                         </button>
@@ -175,7 +193,7 @@ export default function ContactForm() {
                                             <button
                                                 type="button"
                                                 onClick={handleRemoveFile}
-                                                className="font-bold uppercase text-zinc-400 hover:text-white"
+                                                className="font-bold uppercase text-zinc-400 hover:text-white cursor-pointer"
                                             >
                                                 ✕
                                             </button>
@@ -188,7 +206,7 @@ export default function ContactForm() {
                             <button
                                 type="submit"
                                 disabled={status === "submitting"}
-                                className="w-full rounded-md bg-amber-400 py-3.5 text-sm font-extrabold uppercase tracking-widest text-zinc-950 transition hover:bg-amber-300 disabled:opacity-60"
+                                className="w-full rounded-md bg-amber-400 py-3.5 text-sm font-extrabold uppercase tracking-widest text-zinc-950 transition hover:bg-amber-300 disabled:opacity-60 cursor-pointer"
                             >
                                 {status === "submitting" ? "Sending Quote Request..." : "Submit"}
                             </button>
@@ -196,6 +214,12 @@ export default function ContactForm() {
                             {status === "sent" && (
                                 <div className="rounded-md border border-emerald-500/40 bg-emerald-500/10 p-4 text-center text-sm text-emerald-300">
                                     Quote request received! We’ll review your project details and get back to you shortly.
+                                </div>
+                            )}
+
+                            {status === "error" && (
+                                <div className="rounded-md border border-red-500/40 bg-red-500/10 p-4 text-center text-sm text-red-300">
+                                    {errorMessage}
                                 </div>
                             )}
                         </form>
