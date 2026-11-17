@@ -165,7 +165,7 @@ export default function ContactForm() {
                                     <p className="mt-2 text-sm text-zinc-300">
                                         Upload an image{" "}
                                         <span className="text-zinc-500">
-                                            (jpg, jpeg, svg and png — max 4MB)
+                                            (jpg, jpeg, svg and png — max 10MB)
                                         </span>
                                     </p>
 

@@ -15,7 +15,7 @@ export async function sendQuoteAction(formData: FormData) {
     const attachments: { filename: string; content: string }[] = [];
 
     if (artwork && artwork.size > 0) {
-        // Keep well below Next.js/Resend payload limits (e.g., 4MB max)
+        // Keep well below Next.js/Resend payload limits (e.g., 10MB max)
         if (artwork.size > 10 * 1024 * 1024) {
             return {
                 success: false,
@@ -40,8 +40,8 @@ export async function sendQuoteAction(formData: FormData) {
                 "Content-Type": "application/json",
             },
             body: JSON.stringify({
-                from: "Lowbrow Quotes <onboarding@resend.dev>",
-                to: ["sabirdev07@gmail.com"], // Temporarily set to your Resend login email for testing
+                from: "Lowbrow Quotes <quotes@lowbrowscreenprinting.com>",
+                to: ["sabiruil@gmail.com"],
                 reply_to: email,
                 subject: `New Quote Request from ${name} (${quantity})`,
                 text: [
