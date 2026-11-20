@@ -20,7 +20,7 @@ export default function Header() {
                         width={290}
                         height={80}
                         priority
-                        className="h-10 w-auto max-w-[165px] object-contain object-left sm:h-14 sm:max-w-none"
+                        className="h-12 w-auto max-w-[190px] object-contain object-left sm:h-14 sm:max-w-none"
                     />
                 </Link>
 
@@ -28,7 +28,7 @@ export default function Header() {
                 <div className="flex shrink-0 items-center justify-end">
                     <a
                         href="#contact"
-                        className="whitespace-nowrap rounded-md bg-amber-400 px-3.5 py-2 text-xs font-bold uppercase tracking-wide text-zinc-950 transition hover:bg-amber-300 sm:px-5 sm:py-2.5 sm:text-sm"
+                        className="whitespace-nowrap rounded-md bg-amber-400 px-4 py-2.5 font-bold uppercase tracking-wide text-zinc-950 transition hover:bg-amber-300 sm:px-5 text-sm"
                     >
                         Request a Quote
                     </a>
